@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  color: white;
+  font-size: 42px;
+  font-family: "menca", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  border-bottom: 1px solid darkorange;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 10px;
+  font-weight: 300;
+}
+
+p {
+  font-family: "menca", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 17px;
+  line-height: 32px;
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#threejs-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.content,
+.visualizer {
+  position: relative;
+  z-index: 1;
+  width: 33vw;
+  /* background-color: orangered; */
+}
+
+.content {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.content.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.visualizer {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#text-block {
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 50px 50px 0px 50px;
+  /* backdrop-filter: blur(5px); */
+}
+
+button {
+  background-color: orangered;
+  border: 3px solid rgb(180, 66, 24);
+  border-radius: 10px;
+}
+
+.button-center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.round-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.round-button img {
+  height: 20px;
+}
+
+#visualizerOpen img, .playButton img {
+  position: relative;
+  left: 2px;
+}
+
+#visualizerOpen {
+  display: block;
+}
+
+.playButton {
+  display: none;
+}
+
+.content .stopButton {
+  display: none;
+}
+
+.stopButton {
+  display: block;
+}
+
+#visualizerClose {
+  position: fixed;
+  right: 40px;
+  top: 40px;
+}
+
+a, a:hover {
+  color: darkorange;
+  text-decoration: none;
+}
+
+#navigation-text p {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  background-color: black;
+  line-height: 0px;
+  margin-bottom: 0px;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+}
+
+#button-controls {
+  position: fixed;
+  bottom: 40px
+}
