@@ -152,19 +152,6 @@ export default class Model {
 				// console.log(this.meshes[`${this.name}`]);
 			}
 
-			// if (this.name === 'couch') {
-			// 	// names of the children to hide
-			// 	let childrenToHide = ['Plane', 'Plane001'];	
-
-			// 	this.meshes[`${this.name}`].children.forEach((child) => {
-			// 		if (childrenToHide.includes(child.name)) {
-			// 			child.visible = false;
-			// 		}
-			// 	});
-
-			// 	// console.log(this.meshes[`${this.name}`]);
-			// }
-
 			if (this.name === 'donutBoy') {
 				// names of the children to hide
 				let childrenToHide = ['pPlane1'];	

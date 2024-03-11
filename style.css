@@ -120,7 +120,7 @@ button {
   height: 20px;
 }
 
-#visualizerOpen img, .playButton img {
+#visualizerOpen img, #playButton img {
   position: relative;
   left: 2px;
 }
@@ -129,15 +129,11 @@ button {
   display: block;
 }
 
-.playButton {
+#playButton {
   display: none;
 }
 
-.content .stopButton {
-  display: none;
-}
-
-.stopButton {
+#stopButton {
   display: block;
 }
 

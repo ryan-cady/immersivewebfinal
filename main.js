@@ -50,6 +50,7 @@ const spiralMatcapLoader = new THREE.TextureLoader();
 const spiralMatcapTexture = spiralMatcapLoader.load('/spiral2.jpg');
 
 let analyser
+let isAudioPlaying = false
 
 // sphere positions
 const positions = [
@@ -165,6 +166,7 @@ let shouldInterpolate = false;
 
 
 init()
+
 function init() {
 	//set up our renderer default settings, add scene/canvas to webpage
 	renderer.setSize(window.innerWidth, window.innerHeight)
@@ -187,115 +189,48 @@ function init() {
 	animate()
 }
 
-// function fonts() {
-// 	const fontLoader = new FontLoader()
-// 	const tLoader = new THREE.TextureLoader()
-// 	const mat = tLoader.load('/mat4.png')
-
-// 	fontLoader.load('/dmSans700.json', (font) => {
-// 		const textGeometry = new TextGeometry('PERSUASIVE   PERCUSSION', {
-// 			font: font,
-// 			size: 0.15,
-// 			height: 0.0005,
-// 			curveSegments: 12,
-// 			bevelEnabled: true,
-// 			bevelThickness: 0.03,
-// 			bevelSize: 0.002,
-// 			bevelOffset: 0,
-// 			bevelSegments: 5,
-// 		})
-// 		const textMaterial = new THREE.MeshMatcapMaterial({
-// 			matcap: mat,
-// 		})
-// 		const text = new THREE.Mesh(textGeometry, textMaterial)
-// 		text.position.set(-1.35, 1.25, 0)
-// 		scene.add(text)
-// 	})
-
-// 	fontLoader.load('/dmSans700.json', (font) => {
-// 		const textGeometry = new TextGeometry('VOLUME 3', {
-// 			font: font,
-// 			size: 0.07,
-// 			height: 0.0005,
-// 			curveSegments: 12,
-// 			bevelEnabled: true,
-// 			bevelThickness: 0.01,
-// 			bevelSize: 0.001,
-// 			bevelOffset: 0,
-// 			bevelSegments: 2,
-// 		})
-// 		const textMaterial = new THREE.MeshMatcapMaterial({
-// 			matcap: mat,
-// 		})
-// 		const text = new THREE.Mesh(textGeometry, textMaterial)
-// 		text.position.set(-1.35, 1.1, 0)
-// 		scene.add(text)
-// 	})
-
-// 	fontLoader.load('/dmSans700.json', (font) => {
-// 		const textGeometry = new TextGeometry('STEREO', {
-// 			font: font,
-// 			size: 0.07,
-// 			height: 0.0005,
-// 			curveSegments: 12,
-// 			bevelEnabled: true,
-// 			bevelThickness: 0.01,
-// 			bevelSize: 0.001,
-// 			bevelOffset: 0,
-// 			bevelSegments: 2,
-// 		})
-// 		const textMaterial = new THREE.MeshMatcapMaterial({
-// 			matcap: mat,
-// 		})
-// 		const text = new THREE.Mesh(textGeometry, textMaterial)
-// 		text.position.set(0.03, 1.1, 0)
-// 		scene.add(text)
-// 	})
-
-// }
-
 function loadFonts() {
-    const fontLoader = new FontLoader();
-    const group = new THREE.Group(); // Create a group to hold all text meshes
-    group.name = 'fonts'; // Name the group for easy reference
+	const fontLoader = new FontLoader();
+	const group = new THREE.Group(); // Create a group to hold all text meshes
+	group.name = 'fonts'; // Name the group for easy reference
 
-    const tLoader = new THREE.TextureLoader();
-    const mat = tLoader.load('/mat4.png');
-    const fontUrl = '/dmSans700.json'; // Assuming the font URL is the same for all texts
+	const tLoader = new THREE.TextureLoader();
+	const mat = tLoader.load('/mat4.png');
+	const fontUrl = '/dmSans700.json'; // Assuming the font URL is the same for all texts
 
-    fontLoader.load(fontUrl, (font) => {
-        const texts = [
-            { text: 'PERSUASIVE   PERCUSSION', size: 0.15, height: 0.0005, position: { x: -1.35, y: 1.25, z: 0 } },
-            { text: 'VOLUME 3', size: 0.07, height: 0.0005, position: { x: -1.35, y: 1.1, z: 0 } },
-            { text: 'STEREO', size: 0.07, height: 0.0005, position: { x: 0.03, y: 1.1, z: 0 } }
-        ];
+	fontLoader.load(fontUrl, (font) => {
+		const texts = [
+			{ text: 'PERSUASIVE   PERCUSSION', size: 0.15, height: 0.0005, position: { x: -1.35, y: 1.25, z: 0 } },
+			{ text: 'VOLUME 3', size: 0.07, height: 0.0005, position: { x: -1.35, y: 1.1, z: 0 } },
+			{ text: 'STEREO', size: 0.07, height: 0.0005, position: { x: 0.03, y: 1.1, z: 0 } }
+		];
 
-        texts.forEach(({ text, size, height, position }) => {
-            const textGeometry = new TextGeometry(text, {
-                font: font,
-                size: size,
-                height: height,
-                curveSegments: 12,
-                bevelEnabled: true,
-                bevelThickness: 0.03,
-                bevelSize: 0.002,
-                bevelOffset: 0,
-                bevelSegments: 5,
-            });
+		texts.forEach(({ text, size, height, position }) => {
+			const textGeometry = new TextGeometry(text, {
+				font: font,
+				size: size,
+				height: height,
+				curveSegments: 12,
+				bevelEnabled: true,
+				bevelThickness: 0.03,
+				bevelSize: 0.002,
+				bevelOffset: 0,
+				bevelSegments: 5,
+			});
 
-            const textMaterial = new THREE.MeshMatcapMaterial({
-                matcap: mat,
-            });
+			const textMaterial = new THREE.MeshMatcapMaterial({
+				matcap: mat,
+			});
 
-            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-            textMesh.position.set(position.x, position.y, position.z);
+			const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+			textMesh.position.set(position.x, position.y, position.z);
 
-            group.add(textMesh); // Add the text mesh to the group
-        });
+			group.add(textMesh); // Add the text mesh to the group
+		});
 
-        scene.add(group); // Add the entire group to the scene
-        meshes.fonts = group; // Store the reference in the meshes object
-    });
+		scene.add(group); // Add the entire group to the scene
+		meshes.fonts = group; // Store the reference in the meshes object
+	});
 }
 
 function instances() {
@@ -579,8 +514,8 @@ function animate() {
 	}
 
 	renderer.render(scene, camera);
-	
-	
+
+
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.01;
 		console.log(analyser.getAverageFrequency());
@@ -608,7 +543,7 @@ function animate() {
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.075;
 		console.log(analyser.getAverageFrequency());
-	
+
 		meshes.blue1.position.z = avgFrq * .01;
 		meshes.blue2.position.z = avgFrq * .03;
 		meshes.blue3.position.z = avgFrq * .05;
@@ -617,12 +552,12 @@ function animate() {
 		meshes.blue6.position.z = avgFrq * .03;
 		meshes.blue7.position.z = avgFrq * .05;
 		meshes.blue8.position.z = avgFrq * .07;
-	
+
 		meshes.black1.position.z = avgFrq * .01;
 		meshes.black2.position.z = avgFrq * .03;
 		meshes.black3.position.z = avgFrq * .05;
 		meshes.black4.position.z = avgFrq * .01;
-	
+
 		meshes.white1.position.z = avgFrq * .01;
 		meshes.white2.position.z = avgFrq * .01;
 		meshes.white3.position.z = avgFrq * .05;
@@ -632,7 +567,7 @@ function animate() {
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.005;
 		console.log(analyser.getAverageFrequency());
-	
+
 		meshes.plant1.position.y = avgFrq - 4;
 		// meshes.plant1.rotation.z = THREE.MathUtils.degToRad(avgFrq);
 		meshes.plant2.rotation.x = THREE.MathUtils.degToRad(2 * avgFrq);
@@ -651,7 +586,7 @@ function animate() {
 		meshes.donutBoy.rotation.x = THREE.MathUtils.degToRad(5 * avgFrq);
 		meshes.projector.rotation.x = THREE.MathUtils.degToRad(5 * avgFrq);
 		meshes.fonts.rotation.x = THREE.MathUtils.degToRad(5 * avgFrq);
-		
+
 	}
 }
 
@@ -664,6 +599,43 @@ function setupButtonListeners() {
 	const visualizerCloseButton = document.getElementById('visualizerClose');
 	const contentDiv = document.querySelector('.content');
 	const visualizerDiv = document.querySelector('.visualizer');
+
+	const playButton = document.getElementById('playButton');
+	const stopButton = document.getElementById('stopButton');
+
+	// Create an AudioListener and add it to the camera
+	const listener = new THREE.AudioListener();
+	camera.add(listener);
+
+	// Create an Audio source
+	const sound = new THREE.Audio(listener);
+
+	// Load a sound and set it as the Audio object's buffer
+	const audioLoader = new THREE.AudioLoader();
+	audioLoader.load('/bingobangobongobaby.ogg', function (buffer) {
+		sound.setBuffer(buffer);
+		sound.setLoop(true);
+		sound.setVolume(0.5);
+	});
+
+	function resetPositions() {
+        positions.forEach(position => {
+            const object = scene.getObjectByName(position.name);
+            if (object) {
+                object.position.set(position.x, position.y, position.z);
+            }
+        });
+	}
+
+	function updateButtonVisibility() {
+        if (isAudioPlaying) {
+            playButton.style.display = 'none';
+            stopButton.style.display = 'block';
+        } else {
+            playButton.style.display = 'block';
+            stopButton.style.display = 'none';
+        }
+    }
 
 	visualizerOpenButton.addEventListener('click', () => {
 		targetPosition.set(0, 0, 3);
@@ -678,31 +650,18 @@ function setupButtonListeners() {
 			setTimeout(() => {
 				visualizerDiv.style.opacity = 1;
 				visualizerDiv.style.visibility = 'visible';
-			}, 10); // A small delay to ensure CSS transitions are triggered
-		}, 500); // Assuming your fade out is 500ms, adjust if necessary
+			}, 10); // css delay
+		}, 500); // fade out
 
-		// create an AudioListener and add it to the camera
-		const listener = new THREE.AudioListener();
-		camera.add(listener);
-
-		// create an Audio source
-		const sound = new THREE.Audio(listener);
-
-		// load a sound and set it as the Audio object's buffer
-		const audioLoader = new THREE.AudioLoader();
-		audioLoader.load('/bingobangobongobaby.ogg', function (buffer) {
-			sound.setBuffer(buffer);
-			sound.setLoop(true);
-			sound.setVolume(0.5);
+		// play the audio only if it's not already playing
+		if (!isAudioPlaying) {
 			sound.play();
-		});
+			isAudioPlaying = true;
+			analyser = new THREE.AudioAnalyser(sound, 32);
+			const data = analyser.getAverageFrequency();
+		}
 
-		// create an AudioAnalyser, passing in the sound and desired fftSize
-		analyser = new THREE.AudioAnalyser(sound, 32);
-
-		// get the average frequency of the sound
-		const data = analyser.getAverageFrequency();
-
+		updateButtonVisibility();
 	});
 
 	visualizerCloseButton.addEventListener('click', () => {
@@ -721,14 +680,39 @@ function setupButtonListeners() {
 			}, 10);
 		}, 500);
 
+		updateButtonVisibility();
 	});
 
+    playButton.addEventListener('click', () => {
+        if (!isAudioPlaying) {
+            sound.play();
+            isAudioPlaying = true;
+            analyser = new THREE.AudioAnalyser(sound, 32);
+            playButton.style.display = 'none'; 
+            stopButton.style.display = 'block'; 
+        }
+
+		updateButtonVisibility();
+    });
+
+    stopButton.addEventListener('click', () => {
+        if (isAudioPlaying) {
+            sound.stop();
+            isAudioPlaying = false;
+            stopButton.style.display = 'none';
+            playButton.style.display = 'block';
+        }
+
+		updateButtonVisibility();
+    });
+
 }
+
+setupButtonListeners();
+
 
 controls.addEventListener('start', function () {
 	shouldInterpolate = false;
 });
-
-setupButtonListeners();
 
 renderer.domElement.addEventListener('click', logCameraPosition);
