@@ -38,7 +38,7 @@ wall.name = "coverBase"
 scene.add(wall);
 meshes.coverBase = wall;
 
-const sphereRadius = 0.20; //size of balls
+const sphereRadius = 0.20;
 const sphereDetail = 32;
 const colors = {
 	blue: 0x5283a4,
@@ -85,7 +85,7 @@ positions.forEach(({ color, x, y, z, name }) => {
 		meshes[`${name}`] = sphere
 	}
 
-	// centered at the origin
+	// center at the origin
 	sphere.position.set(x * 0.25 - 0.875, y * 0.25 - 0.125, 0);
 	scene.add(sphere);
 });
@@ -95,10 +95,10 @@ const floorTextureLoader = new THREE.TextureLoader();
 floorTextureLoader.load('/floor2.jpg', function (texture) {
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
-	texture.repeat.set(10, 10); // Adjust based on the texture and desired appearance
+	texture.repeat.set(10, 10);
 
 	// create floor geometry and material
-	const floorGeometry = new THREE.PlaneGeometry(20, 20); // Adjust size as needed
+	const floorGeometry = new THREE.PlaneGeometry(20, 20);
 	const floorMaterial = new THREE.MeshPhongMaterial({
 		map: texture,
 		side: THREE.DoubleSide,
@@ -106,8 +106,8 @@ floorTextureLoader.load('/floor2.jpg', function (texture) {
 
 	// create the floor mesh and add it to the scene
 	const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-	floor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
-	floor.position.y = -3.5; // Adjust position based on your scene setup
+	floor.rotation.x = -Math.PI / 2; // rotate to make it horizontal
+	floor.position.y = -3.5;
 	scene.add(floor);
 });
 
@@ -150,7 +150,7 @@ backWallTextureLoader.load('/wallpaper2.jpg', function (texture) {
 
 	const rightWall = new THREE.Mesh(rightWallGeometry, rightWallMaterial);
 
-	// Position and rotate the right wall to make it the right side of the scene
+	// position and rotate the right wall to make it the right side of the scene
 	rightWall.position.set(10, 1.5, -0);
 	rightWall.rotation.y = -Math.PI / 2;
 
@@ -170,7 +170,6 @@ init()
 function init() {
 	//set up our renderer default settings, add scene/canvas to webpage
 	renderer.setSize(window.innerWidth, window.innerHeight)
-	// document.body.appendChild(renderer.domElement)
 	document.getElementById('threejs-background').appendChild(renderer.domElement);
 
 
@@ -179,8 +178,6 @@ function init() {
 	lights.default = addLight()
 
 	scene.add(lights.default)
-	// scene.add(meshes.standard)
-	// scene.add(meshes.default)
 
 	camera.position.set(2, 3, 8)
 	instances()
@@ -191,12 +188,11 @@ function init() {
 
 function loadFonts() {
 	const fontLoader = new FontLoader();
-	const group = new THREE.Group(); // Create a group to hold all text meshes
-	group.name = 'fonts'; // Name the group for easy reference
+	const group = new THREE.Group();
 
 	const tLoader = new THREE.TextureLoader();
 	const mat = tLoader.load('/mat4.png');
-	const fontUrl = '/dmSans700.json'; // Assuming the font URL is the same for all texts
+	const fontUrl = '/dmSans700.json';
 
 	fontLoader.load(fontUrl, (font) => {
 		const texts = [
@@ -225,11 +221,11 @@ function loadFonts() {
 			const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 			textMesh.position.set(position.x, position.y, position.z);
 
-			group.add(textMesh); // Add the text mesh to the group
+			group.add(textMesh);
 		});
 
-		scene.add(group); // Add the entire group to the scene
-		meshes.fonts = group; // Store the reference in the meshes object
+		scene.add(group);
+		meshes.fonts = group;
 	});
 }
 
@@ -257,7 +253,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'tulip table',
 		position: new THREE.Vector3(0, -3.5, 2),
 		scale: new THREE.Vector3(2, 2, 2),
@@ -272,7 +267,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'eames',
 		position: new THREE.Vector3(2.5, -3.5, 2),
 		scale: new THREE.Vector3(3, 3, 3),
@@ -288,7 +282,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'orange table',
 		position: new THREE.Vector3(0, -1.6, -1.5),
 		scale: new THREE.Vector3(1, 1, 1),
@@ -304,7 +297,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'projector',
 		position: new THREE.Vector3(3.5, 0.25, -8.5),
 		scale: new THREE.Vector3(10, 10, 10),
@@ -320,7 +312,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'cabinet',
 		position: new THREE.Vector3(5, -3.5, -9.8),
 		scale: new THREE.Vector3(4, 4, 4),
@@ -335,7 +326,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'plant1',
 		position: new THREE.Vector3(-22, -3.5, -8),
 		scale: new THREE.Vector3(10, 10, 10),
@@ -351,7 +341,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'plant2',
 		position: new THREE.Vector3(-2.75, -1.5, -1),
 		scale: new THREE.Vector3(5, 5, 5),
@@ -366,7 +355,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'plant3',
 		position: new THREE.Vector3(-44, -3.5, -1),
 		scale: new THREE.Vector3(8, 8, 8),
@@ -381,7 +369,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'plant4',
 		position: new THREE.Vector3(-40, -3.5, 2),
 		scale: new THREE.Vector3(8, 8, 8),
@@ -396,7 +383,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'plant5',
 		position: new THREE.Vector3(-6.8, .25, -9),
 		scale: new THREE.Vector3(5, 5, 5),
@@ -411,7 +397,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'tv',
 		position: new THREE.Vector3(-6.5, -3.5, -8),
 		scale: new THREE.Vector3(2, 2, 2),
@@ -427,7 +412,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'couch',
 		position: new THREE.Vector3(8, -3.45, -3),
 		scale: new THREE.Vector3(1, 1, 1),
@@ -443,7 +427,6 @@ function instances() {
 		animationState: true,
 		scene: scene,
 		meshes: meshes,
-		// replace: true,
 		name: 'headphones',
 		position: new THREE.Vector3(3, -1.28, 1.2),
 		scale: new THREE.Vector3(.3, .3, .3),
