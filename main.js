@@ -53,7 +53,7 @@ let analyser
 let isAudioPlaying = false
 
 // sphere positions
-const positions = [
+let positions = [
 
 	{ color: 'blue', x: -.5, y: 3, z: -0.1, name: 'blue1' },
 	{ color: 'blue', x: 7, y: 2.8, z: -0.1, name: 'blue2' },
@@ -63,18 +63,40 @@ const positions = [
 	{ color: 'blue', x: 8, y: -0.24, z: -0.1, name: 'blue6' },
 	{ color: 'blue', x: 5.5, y: -3.5, z: -0.1, name: 'blue7' },
 	{ color: 'blue', x: 7.3, y: -1.65, z: -0.1, name: 'blue8' },
-
 	{ color: 'black', x: 2, y: 2.3, z: -0.1, name: 'black1' },
 	{ color: 'black', x: 6, y: -0.24, z: -0.1, name: 'black2' },
 	{ color: 'black', x: -.7, y: -4, z: -0.1, name: 'black3' },
 	{ color: 'black', x: 3, y: -3.5, z: -0.1, name: 'black4' },
-
 	{ color: 'white', x: 4.5, y: 3.6, z: -0.1, name: 'white1' },
 	{ color: 'white', x: .50, y: 1, z: -0.1, name: 'white2' },
 	{ color: 'white', x: 3, y: 1, z: -0.1, name: 'white3' },
 	{ color: 'white', x: 7.8, y: -3.1, z: -0.1, name: 'white4' },
-
 ];
+
+function resetPositions() {
+    positions = [
+        { color: 'blue', x: -.5, y: 3, z: -0.1, name: 'blue1' },
+        { color: 'blue', x: 7, y: 2.8, z: -0.1, name: 'blue2' },
+        { color: 'blue', x: 5.5, y: 1.4, z: -0.1, name: 'blue3' },
+        { color: 'blue', x: -.5, y: -.4, z: -0.1, name: 'blue4' },
+        { color: 'blue', x: 2, y: -2, z: -0.1, name: 'blue5' },
+        { color: 'blue', x: 8, y: -0.24, z: -0.1, name: 'blue6' },
+        { color: 'blue', x: 5.5, y: -3.5, z: -0.1, name: 'blue7' },
+        { color: 'blue', x: 7.3, y: -1.65, z: -0.1, name: 'blue8' },
+        { color: 'black', x: 2, y: 2.3, z: -0.1, name: 'black1' },
+        { color: 'black', x: 6, y: -0.24, z: -0.1, name: 'black2' },
+        { color: 'black', x: -.7, y: -4, z: -0.1, name: 'black3' },
+        { color: 'black', x: 3, y: -3.5, z: -0.1, name: 'black4' },
+        { color: 'white', x: 4.5, y: 3.6, z: -0.1, name: 'white1' },
+        { color: 'white', x: .50, y: 1, z: -0.1, name: 'white2' },
+        { color: 'white', x: 3, y: 1, z: -0.1, name: 'white3' },
+        { color: 'white', x: 7.8, y: -3.1, z: -0.1, name: 'white4' },
+    ];
+
+    return positions;
+}
+
+resetPositions()
 
 //spheres
 positions.forEach(({ color, x, y, z, name }) => {
@@ -687,12 +709,12 @@ function setupButtonListeners() {
         }
 
 		updateButtonVisibility();
+		resetPositions();
     });
 
 }
 
 setupButtonListeners();
-
 
 controls.addEventListener('start', function () {
 	shouldInterpolate = false;
