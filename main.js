@@ -73,31 +73,6 @@ let positions = [
 	{ color: 'white', x: 7.8, y: -3.1, z: -0.1, name: 'white4' },
 ];
 
-function resetPositions() {
-    positions = [
-        { color: 'blue', x: -.5, y: 3, z: -0.1, name: 'blue1' },
-        { color: 'blue', x: 7, y: 2.8, z: -0.1, name: 'blue2' },
-        { color: 'blue', x: 5.5, y: 1.4, z: -0.1, name: 'blue3' },
-        { color: 'blue', x: -.5, y: -.4, z: -0.1, name: 'blue4' },
-        { color: 'blue', x: 2, y: -2, z: -0.1, name: 'blue5' },
-        { color: 'blue', x: 8, y: -0.24, z: -0.1, name: 'blue6' },
-        { color: 'blue', x: 5.5, y: -3.5, z: -0.1, name: 'blue7' },
-        { color: 'blue', x: 7.3, y: -1.65, z: -0.1, name: 'blue8' },
-        { color: 'black', x: 2, y: 2.3, z: -0.1, name: 'black1' },
-        { color: 'black', x: 6, y: -0.24, z: -0.1, name: 'black2' },
-        { color: 'black', x: -.7, y: -4, z: -0.1, name: 'black3' },
-        { color: 'black', x: 3, y: -3.5, z: -0.1, name: 'black4' },
-        { color: 'white', x: 4.5, y: 3.6, z: -0.1, name: 'white1' },
-        { color: 'white', x: .50, y: 1, z: -0.1, name: 'white2' },
-        { color: 'white', x: 3, y: 1, z: -0.1, name: 'white3' },
-        { color: 'white', x: 7.8, y: -3.1, z: -0.1, name: 'white4' },
-    ];
-
-    return positions;
-}
-
-resetPositions()
-
 //spheres
 positions.forEach(({ color, x, y, z, name }) => {
 	const geometry = new THREE.SphereGeometry(sphereRadius, sphereDetail, sphereDetail);
@@ -110,6 +85,8 @@ positions.forEach(({ color, x, y, z, name }) => {
 	// center at the origin
 	sphere.position.set(x * 0.25 - 0.875, y * 0.25 - 0.125, 0);
 	scene.add(sphere);
+	console.log(`${name} initial position: x=${sphere.position.x}, y=${sphere.position.y}, z=${sphere.position.z}`);
+	console.log(`${name} initial scale:`, sphere.scale);
 });
 
 // load floor texture
@@ -185,7 +162,6 @@ camera.position.z = 3;
 let targetPosition = new THREE.Vector3(2, 3, 8);
 let targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
 let shouldInterpolate = false;
-
 
 init()
 
@@ -523,7 +499,7 @@ function animate() {
 
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.01;
-		console.log(analyser.getAverageFrequency());
+		// console.log(analyser.getAverageFrequency());
 
 		meshes.blue1.scale.set(avgFrq, avgFrq, avgFrq);
 		meshes.blue2.scale.set(avgFrq * 1.25, avgFrq * 1.25, avgFrq * 1.25);
@@ -547,7 +523,7 @@ function animate() {
 
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.075;
-		console.log(analyser.getAverageFrequency());
+		// console.log(analyser.getAverageFrequency());
 
 		meshes.blue1.position.z = avgFrq * .01;
 		meshes.blue2.position.z = avgFrq * .03;
@@ -571,7 +547,7 @@ function animate() {
 
 	if (analyser) {
 		let avgFrq = analyser.getAverageFrequency() * 0.005;
-		console.log(analyser.getAverageFrequency());
+		// console.log(analyser.getAverageFrequency());
 
 		meshes.plant1.position.y = avgFrq - 4;
 		// meshes.plant1.rotation.z = THREE.MathUtils.degToRad(avgFrq);
@@ -593,7 +569,21 @@ function animate() {
 		meshes.fonts.rotation.x = THREE.MathUtils.degToRad(5 * avgFrq);
 
 	}
+	
 }
+
+function resetSpheres() {
+    console.log("Resetting spheres...");
+    const meshGroups = [meshes.blue1, meshes.blue2, meshes.blue3, meshes.blue4, meshes.blue5, meshes.blue6, meshes.blue7, meshes.blue8, meshes.black1, meshes.black2, meshes.black3, meshes.black4, meshes.white1, meshes.white2, meshes.white3, meshes.white4];
+
+    meshGroups.forEach(mesh => {
+        console.log(`Before reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
+        mesh.scale.set(1, 1, 1);
+        mesh.position.z = 0;
+        console.log(`After reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
+    });
+}
+
 
 function logCameraPosition() {
 	console.log(`Camera Position - x: ${camera.position.x.toFixed(2)}, y: ${camera.position.y.toFixed(2)}, z: ${camera.position.z.toFixed(2)}`);
@@ -623,15 +613,6 @@ function setupButtonListeners() {
 		sound.setVolume(0.5);
 	});
 
-	function resetPositions() {
-        positions.forEach(position => {
-            const object = scene.getObjectByName(position.name);
-            if (object) {
-                object.position.set(position.x, position.y, position.z);
-            }
-        });
-	}
-
 	function updateButtonVisibility() {
         if (isAudioPlaying) {
             playButton.style.display = 'none';
@@ -641,7 +622,7 @@ function setupButtonListeners() {
             stopButton.style.display = 'none';
         }
     }
-
+	
 	visualizerOpenButton.addEventListener('click', () => {
 		targetPosition.set(0, 0, 3);
 		targetQuaternion.setFromEuler(new THREE.Euler(0, 0, 0));
@@ -700,17 +681,19 @@ function setupButtonListeners() {
 		updateButtonVisibility();
     });
 
-    stopButton.addEventListener('click', () => {
-        if (isAudioPlaying) {
-            sound.stop();
-            isAudioPlaying = false;
-            stopButton.style.display = 'none';
-            playButton.style.display = 'block';
-        }
-
-		updateButtonVisibility();
-		resetPositions();
-    });
+	stopButton.addEventListener('click', () => {
+		if (isAudioPlaying) {
+			sound.stop();
+			isAudioPlaying = false;
+			analyser = null;
+			stopButton.style.display = 'none';
+			playButton.style.display = 'block';
+	
+			updateButtonVisibility();
+			// resetSpheres();
+		}
+	});
+	
 
 }
 

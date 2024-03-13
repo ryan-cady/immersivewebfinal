@@ -162,7 +162,7 @@ export default class Model {
 					}
 				});
 
-				console.log(this.meshes[`${this.name}`]);
+				// console.log(this.meshes[`${this.name}`]);
 			}
 
 			if (this.name === 'rug') {
