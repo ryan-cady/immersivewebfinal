@@ -572,17 +572,17 @@ function animate() {
 	
 }
 
-function resetSpheres() {
-    console.log("Resetting spheres...");
-    const meshGroups = [meshes.blue1, meshes.blue2, meshes.blue3, meshes.blue4, meshes.blue5, meshes.blue6, meshes.blue7, meshes.blue8, meshes.black1, meshes.black2, meshes.black3, meshes.black4, meshes.white1, meshes.white2, meshes.white3, meshes.white4];
+// function resetSpheres() {
+//     console.log("Resetting spheres...");
+//     const meshGroups = [meshes.blue1, meshes.blue2, meshes.blue3, meshes.blue4, meshes.blue5, meshes.blue6, meshes.blue7, meshes.blue8, meshes.black1, meshes.black2, meshes.black3, meshes.black4, meshes.white1, meshes.white2, meshes.white3, meshes.white4];
 
-    meshGroups.forEach(mesh => {
-        console.log(`Before reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
-        mesh.scale.set(1, 1, 1);
-        mesh.position.z = 0;
-        console.log(`After reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
-    });
-}
+//     meshGroups.forEach(mesh => {
+//         console.log(`Before reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
+//         mesh.scale.set(1, 1, 1);
+//         mesh.position.z = 0;
+//         console.log(`After reset: ${mesh.name} scale:`, mesh.scale, `position.z:`, mesh.position.z);
+//     });
+// }
 
 
 function logCameraPosition() {
